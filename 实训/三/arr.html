@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+      var arr = [1, 2];
+      var newArr = [];
+      var len = 5;
+      var i = 0;
+      var timer =  setInterval(function () {
+           if(i == 0 || i == 1){
+               newArr[i] = arr[i];
+               i++;
+           }else{
+               newArr[i] = arr[i-1] + arr[i-2];
+               arr[i] = newArr[i];
+               i++;
+           }
+           if(i == len+1){
+               console.log(newArr.reverse());
+               i = 0;
+           }else {
+               console.log(newArr);
+           }
+
+       },1000)
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

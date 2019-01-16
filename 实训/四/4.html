@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="jquery.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $(function(){
+        $('#btn').click(function(){
+          $.ajax({
+            url:'http://bbsclick.10jqka.com.cn/clicks.php',
+            type:'GET',
+            dataType:'jsonp',
+            jsonp: "callback",
+            jsonpCallback:""
+            success:function(data){
+
+            },
+            error(){
+              alert('错误')
+            }
+          })
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <input type="button" id="btn" value="按钮">
+  </body>
+</html>
