@@ -1,0 +1,20 @@
+console.log(window.location.href);
+console.log(location.protocol);
+console.log(window.location.host);
+console.log(window.location.search);
+console.log(window.location.hostname);
+console.log(navigator.appCodeName);
+console.log(screen.availWidth);
+console.log(screen.availHeight);
+console.log(document.body.clientWidth  );
+console.log(document.body.clientHeight  );
+1 http://t.10jqka.com.cn/?name=sxy
+2 http:
+3 t.10jqka.com.cn
+4 ?name=sxy
+5 t.10jqka.com.cn
+6 Mozilla
+7 1280
+8 984
+9 558
+10 2716

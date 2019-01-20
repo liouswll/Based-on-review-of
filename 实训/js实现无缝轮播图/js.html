@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      *{
+        margin:0;
+        padding:0;
+        list-style:none;
+      }
+      #container{
+        width:990px;
+        height:410px;
+        position:relative;
+        margin: 100px auto;
+        border:2px solid #000;
+        overflow: hidden;
+      }
+      #list {
+        width:5940px;
+        position:absolute;
+      }
+      #list img{
+        width:990px;
+        height:410px;
+        float:left;
+      }
+      #btn{
+        position:absolute;
+        height:20px;
+        text-align:center;
+        line-height:20px;
+        margin: auto;
+        left:450px;
+        bottom:20px;
+      }
+      #btn  span{
+        float:left;
+        width:20px;
+        height:20px;
+        background:#fff;
+        border:1px solid #ccc;
+        margin-left:10px;
+        cursor: pointer;
+
+      }
+      #btn .btnActive{
+        background: yellow;
+      }
+      #last {
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 50%;
+        margin-top: -20px;
+        background: #000;
+        cursor: pointer;
+        line-height: 40px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 30px;
+        color: #fff;
+        opacity: 0.3;
+        border: 1px solid #fff;
+      }
+      #next {
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 50%;
+        margin-top: -20px;
+        background: #000;
+        cursor: pointer;
+        line-height: 40px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 30px;
+        color: #fff;
+        opacity: 0.3;
+        border: 1px solid #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+        <div id="list" style="left:-990px">
+          <img src="4.png" alt="">
+          <img src="1.png" alt="">
+          <img src="2.png" alt="">
+          <img src="3.png" alt="">
+          <img src="4.png" alt="">
+          <img src="1.png" alt="">
+        </div>
+        <div id="btn">
+          <span index="1" class="btnActive">1</span>
+          <span index="2" >2</span>
+          <span index="3">3</span>
+          <span index="4">4</span>
+        </div>
+        <a href="#" id="last">&lt</a>
+        <a href="#" id="next">&gt</a>
+    </div>
+  </body>
+  <script>
+    window.onload=function(){
+      var container =document.getElementById('container');
+      var list=document.getElementById('list');
+      var buttons=document.getElementById('btn').getElementsByTagName('span');
+      var last=document.getElementById('last');
+      var next=document.getElementById('next');
+      var index=1;
+      var len=4;
+      var timer;
+
+      //图片移动 点击左右按钮移动
+      function animate(offset){
+
+        var newLeft=parseInt(list.style.left)+offset;
+        var time=400;//位移总时间
+        var moveTime=10;//每次位移间隔时间
+        var speed = offset/(time/moveTime)//每次的位移量
+        //什么情况下的位置
+        function go(){
+          //右   左
+          if((speed<0 && parseInt(list.style.left)>newLeft)||(speed>0 && parseInt(list.style.left)<newLeft)){
+            list.style.left= parseInt(list.style.left)+speed+'px';//每次移动的量
+            //函数在一段时间不停的调用自身（递归）
+            setTimeout(go,moveTime)//再次调用看位移是否达到目标值
+          }else{
+            //将left值归为正确的目标值  是否移动到假的辅助图上=>归位真图
+            list.style.left=newLeft+'px';
+            if(newLeft > -990){
+              list.style.left = -3960+'px';
+            }
+            if(newLeft< -3960){
+              list.style.left = -990+'px';
+            }
+          }
+        }
+        go();
+      }
+      //下一张
+      next.onclick=function(){
+        //index最大值
+        if(index==4){
+          index=1;
+        }else{
+          index +=1;
+        }
+        //index +=1;
+        showButton()
+        animate(-990);
+      };
+      //上一张
+      last.onclick=function(){
+        //index最小值
+        if(index==1){
+          index=4;
+        }else{
+          index -=1;
+        }
+        //index -=1;
+        showButton()
+        animate(990);
+      };
+      //数字颜色原点改变
+      function showButton(){
+        for(var i=0;i<buttons.length;i++){
+          //按钮颜色变化  取消颜色
+          if(buttons[i].className == 'btnActive'){
+            buttons[i].className='';
+            break;
+          }
+        }
+        //数组显示
+        buttons[index-1].className="btnActive"
+      };
+      //按钮事件切换
+      for(var i=0;i<buttons.length;i++){
+        buttons[i].onclick=function(){
+          //获取id自定义属性属性
+          var myId=parseInt(this.getAttribute('index'));
+          //点击小圆点的偏移量
+          var offset =-990*(myId-index);
+          animate(offset);
+          index=myId;
+          //显示按钮颜色
+          showButton()
+        }
+      }
+      //定时器
+      function play(){
+        timer=setInterval(function(){
+          next.onclick();
+        },3000)
+      }
+      //停止
+      function stop(){
+        clearInterval(timer);
+      }
+      container.onmouseover=function(){
+        stop();
+      }
+      container.onmouseout=function(){
+        play();
+      }
+    }
+  </script>
+</html>
